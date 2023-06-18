@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<title>Mobiz-Advanced-Fake-4Chan-Post-Generator</title>
+
+<style>
+#post b {
+	color: green;
+}
+
+* {
+	font-family: arial,helvetica,sans-serif;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+}
+
+#post {
+	background: rgb(214, 218, 240);
+    height: fit-content;
+    width: fit-content;
+    padding: 10px 10px 10px 20px;
+}
+
+small {
+	color: rgb(84, 85, 122);
+}
+
+body {
+	background:#eef2ff;
+	display: flex;
+	place-items: center;
+	justify-content: center;
+	height: 100vh;
+}
+
+#header {
+	padding: 5px;
+    background: #98e;
+    padding-left: 0.5em;
+}
+
+#header h2 {
+	font-size: 131%;
+	font-weight: 700;
+	display: inline;
+}
+
+#box-outer {
+	border: 1px solid;
+	background: white;
+	max-width: 750px;
+}
+
+#main {
+	padding: 10px;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
+
+<body>
+	
+	<div>
+		<div id="box-outer">
+			<div id="header">
+				<h2>Mobiz-Advanced-Fake-4Chan-Post-Generator</h2>
+			</div>
+			<div id="main">
+				Write Anything Here!
+				<br><br>
+				<div contenteditable id="post">
+					<b>Anonymous</b> <span id="time"></span> No.<span id="postnum"></span>
+					<small>▶ <u>>><span id="postnum1"></span></u> <u>>><span id="postnum2"></span></u></small>
+
+					<br><br>
+
+					> We are anomalous
+					<br>
+					> We are a region
+					<br>
+					> Forgive and forget.
+					<br>
+					> Expecto Patronum
+				</div>
+			</div>
+		</div>
+
+		<br>
+
+		<div id="box-outer">
+			<div id="header">
+				<h2>Save Post</h2>
+			</div>
+			<div id="main">
+				<button onclick="savePost()">Save Post As PNG</button>
+				<button onclick="window.location.reload()">Clear Post</button>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var currentDate = new Date();
+		var monthNames = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+		var dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+		var month = monthNames[currentDate.getMonth()];
+		var day = currentDate.getDate();
+		var year = currentDate.getFullYear().toString().substr(-2);
+		var dayName = dayNames[currentDate.getDay()];
+		var hours = currentDate.getHours();
+		var minutes = currentDate.getMinutes();
+		var seconds = currentDate.getSeconds();
+
+		if (day < 10) {
+		  day = '0' + day;
+		}
+		if (hours < 10) {
+		  hours = '0' + hours;
+		}
+		if (minutes < 10) {
+		  minutes = '0' + minutes;
+		}
+		if (seconds < 10) {
+		  seconds = '0' + seconds;
+		}
+
+		var formattedTime = month + '/' + day + '/' + year + '(' + dayName + ')' + hours + ':' + minutes + ':' + seconds;
+
+		document.getElementById('time').innerText = formattedTime;
+
+		function randomPostNumber() {
+			return Math.floor("1" + (Math.random() * 100000000))
+		}
+
+		document.getElementById('postnum').innerText = randomPostNumber();
+		document.getElementById('postnum1').innerText = randomPostNumber();
+		document.getElementById('postnum2').innerText = randomPostNumber();
+
+		function saveAs(blob, fileName) {
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement("a");
+			link.href = url;
+			link.download = fileName;
+			link.click();
+		}
+
+		function savePost() {
+			domtoimage.toBlob(document.getElementById('post')).then(function (blob) {
+	        	saveAs(blob, 'post.png')
+	    	});
+		}
+	</script>
+
+</body>
+
+</html>
